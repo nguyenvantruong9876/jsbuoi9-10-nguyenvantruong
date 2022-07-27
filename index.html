@@ -8,7 +8,7 @@
 
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 	<!-- Bootstrap 4 -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 
@@ -115,8 +115,7 @@
 							<div class="col-md-6 text-right">
 								<button class="btn btn-primary" id="btnThem" data-toggle="modal"
 									data-target="#myModal">Thêm nhân viên</button>
-								<button class="btn btn-primary" id="btnThem" data-toggle="modal"
-									data-target="#myModal">Xõa</button>
+								
 							</div>
 
 						</div>
@@ -139,12 +138,12 @@
 							<thead class="text-primary">
 								<tr>
 									<th class="nowrap">
-										<span id= "manv" class="mr-1">Tài khoản</span>
+										<span id="manv" class="mr-1">Tài khoản</span>
 										<i class="fa fa-arrow-up" id="SapXepTang"></i>
 										<i class="fa fa-arrow-down" id="SapXepGiam"></i>
 									</th>
 									<th id="tennv">Họ và tên</th>
-									<th id="tennv">Email</th>
+									<th id="emailnv">Email</th>
 									<th id="datenv">Ngày làm</th>
 									<th id="emailnv">Chức vụ</th>
 									<th id="tongluongnv">Tổng lương</th>
@@ -155,7 +154,7 @@
 							</thead>
 							<tbody id="tableDanhSach">
 
-								<td>
+								<!-- <td>
 									<span class="custom-checkbox">
 										<input type="checkbox" id="checkbox1" name="options[]" value="1">
 										<label for="checkbox1"></label>
@@ -311,7 +310,7 @@
 												class="material-icons" data-toggle="tooltip"
 												title="Delete">&#xE872;</i></a>
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 
 						</table>
@@ -454,8 +453,8 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
-					<button id="btnThemNV" type="button" class="btn btn-success">Thêm người dùng</button>
-					<button id="btnCapNhat" type="button" class="btn btn-success">Cập nhật</button>
+					<button id="btnThemNV" type="button" class="btn btn-success" onclick="themNhanVien()">Thêm người dùng</button>
+					<button id="btnCapNhat" type="button" class="btn btn-success" onclick="capnhatNhanVien()">Cập nhật</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 				</div>
 
@@ -490,6 +489,9 @@
 			});
 		});
 	</script>
+	<script src="./js/DanhSachNhanVien.js"></script>
+	<script src="./js/NhanVien.js"></script>
+	<script src="./js//main.js"></script>
 </body>
 
 </html>
