@@ -4,6 +4,7 @@
  * + tìm kiems sv theo điểu kiện
  */
 var dsnv = new DanhSachNhanVien();
+var validation = new Validation();
 function getELE(id) {
     return document.getElementById(id);
 }
@@ -20,16 +21,33 @@ function themNhanVien() {
 
     console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
 
-    var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
-    nv.tongluong();
-    console.log(nv);
+    var isValid = true;
+     // kiểm tra maNV (KIểm tra rổng, kiểm tra không được trùng)
+    isValid &= validation.checkEmpty(maNV, "tbTKNV", "Chố này không được để trống") && validation.checkID(maNV, "tbTKNV", "mã không được trùng", dsnv.mangNV);
+    // kiểm tra tenNV (KIểm tra rổng, kiểm tra ký tự chữ)
+    isValid &= validation.checkEmpty(tenNV, "tbTen", "Chố này không được để trống") && validation.checkname(tenNV, "tbTen", "Tên nhân viên phải là chữ");
+    // kiểm tra emailNV (KIểm tra rổng, kiểm tra formmat gmail)
+    isValid &= validation.checkEmpty(emailNV, "tbEmail", "Chố này không được để trống") && validation.checkemail(emailNV, "tbEmail", "Email phải đúng định dạng");
+    // kiểm tra passwordNV (KIểm tra rổng, kiểm tra formmat pass)
+    isValid &= validation.checkEmpty(passwordNV, "tbMatKhau", "Chố này không được để trống") && validation.checkpassword(passwordNV, "tbMatKhau", "từ 6-10 ký tự (chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt)");
+    // kiểm tra LuongNV (KIểm tra rổng, kiểm tra formmat -số, 0<=10)
+    isValid &= validation.checkEmpty(LuongNV, "tbLuongCB", "Chố này không được để trống") && validation.checkscore(LuongNV, "tbLuongCB", "không dấu âm, nhập 1000000 - 20000000");
+     // kiểm tra chucvuNV (người dùng có chọn lựa chọn cái đầu tiên )
+    isValid &= validation.checkdropdown("chucvu", "tbChucVu", "Chức vụ phải chọn chức vụ hợp lệ (Giám đốc, Trưởng Phòng, Nhân Viên)");
 
+    
+    if (isValid) {
+        var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
+        nv.tongluong();
+        console.log(nv);
 
+        dsnv.themNV(nv);
+        console.log(dsnv.mangNV);
+        hienthiDS(dsnv.mangNV);
+        setlocalstorage();
+        resetform();
+    }
 
-    dsnv.themNV(nv);
-    console.log(dsnv.mangNV);
-    hienthiDS(dsnv.mangNV);
-    setlocalstorage();
 }
 function setlocalstorage() {
 
@@ -114,4 +132,10 @@ function capnhatNhanVien() {
     dsnv.capnhatNV(nv);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
+    resetform();
+}
+function resetform() {
+
+    getELE("formQLNV").reset();
+    getELE("tknv").disabled = false;
 }
