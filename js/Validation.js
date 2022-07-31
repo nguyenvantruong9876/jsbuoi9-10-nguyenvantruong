@@ -51,7 +51,7 @@ function Validation() {
         return false;
     }
     this.checkpassword = function (inputVal, spanID, message) {
-        var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,8}$/;
+        var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,10}$/;
         if (inputVal.match(pattern)) {
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
@@ -62,8 +62,8 @@ function Validation() {
         return false;
     }
     this.checkscore = function (inputVal, spanID, message) {
-        var pattern = /^(\d{1,2}(\.\d{1,2})?)$/;
-        if (inputVal.match(pattern) && inputVal <= 20000000) {
+        var pattern = /^[0-9]+$/;
+        if (inputVal.match(pattern) &&  inputVal <= 2e7) {
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
             return true;

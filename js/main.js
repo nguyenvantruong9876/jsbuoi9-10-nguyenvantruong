@@ -22,7 +22,7 @@ function themNhanVien() {
     console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
 
     var isValid = true;
-     // kiểm tra maNV (KIểm tra rổng, kiểm tra không được trùng)
+    // kiểm tra maNV (KIểm tra rổng, kiểm tra không được trùng)
     isValid &= validation.checkEmpty(maNV, "tbTKNV", "Chố này không được để trống") && validation.checkID(maNV, "tbTKNV", "mã không được trùng", dsnv.mangNV);
     // kiểm tra tenNV (KIểm tra rổng, kiểm tra ký tự chữ)
     isValid &= validation.checkEmpty(tenNV, "tbTen", "Chố này không được để trống") && validation.checkname(tenNV, "tbTen", "Tên nhân viên phải là chữ");
@@ -32,13 +32,14 @@ function themNhanVien() {
     isValid &= validation.checkEmpty(passwordNV, "tbMatKhau", "Chố này không được để trống") && validation.checkpassword(passwordNV, "tbMatKhau", "từ 6-10 ký tự (chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt)");
     // kiểm tra LuongNV (KIểm tra rổng, kiểm tra formmat -số, 0<=10)
     isValid &= validation.checkEmpty(LuongNV, "tbLuongCB", "Chố này không được để trống") && validation.checkscore(LuongNV, "tbLuongCB", "không dấu âm, nhập 1000000 - 20000000");
-     // kiểm tra chucvuNV (người dùng có chọn lựa chọn cái đầu tiên )
+    // kiểm tra chucvuNV (người dùng có chọn lựa chọn cái đầu tiên )
     isValid &= validation.checkdropdown("chucvu", "tbChucVu", "Chức vụ phải chọn chức vụ hợp lệ (Giám đốc, Trưởng Phòng, Nhân Viên)");
 
-    
+
     if (isValid) {
         var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
         nv.tongluong();
+        nv.xeploai();
         console.log(nv);
 
         dsnv.themNV(nv);
@@ -62,10 +63,10 @@ function getlocalstorage() {
 }
 getlocalstorage();
 function hienthiDS(mangNV) {
-    console.log(mangNV);
+    
     var content = "";
     mangNV.map(function (nv) {
-        console.log(nv);
+        
         content += ` 
             <tr>
                 <td>${nv.maNV}</td>
@@ -74,7 +75,7 @@ function hienthiDS(mangNV) {
                 <td>${nv.ngaylamNV}</td>
                 <td>${nv.chucvuNV}</td>
                 <td>${nv.tongluong}</td>
-               
+                <td>${nv.xeploai}</td>
                 <td>
                     <button class="btn btn-info " onclick="xemChitiet('${nv.maNV}')">Xem</button>
                     <button class="btn btn-danger" onclick="xoaNhanVien('${nv.maNV}')">Xõa</button>
@@ -83,20 +84,20 @@ function hienthiDS(mangNV) {
         `;
 
     });
-    console.log(content);
+    
     getELE("tableDanhSach").innerHTML = content;
 }
 function xoaNhanVien(ma) {
-    console.log(ma);
+    
     dsnv.xoaNV(ma);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
 }
 function xemChitiet(ma) {
-    console.log(ma)
+    
     var viTri = dsnv.timViTri(ma);
     if (viTri > -1) {
-        // tìm thấy
+      
         var nvTim = dsnv.mangNV[viTri];
         console.log(nvTim);
 
@@ -127,6 +128,7 @@ function capnhatNhanVien() {
 
     var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
     nv.tongluong();
+    nv.xeploai();
     console.log(nv);
 
     dsnv.capnhatNV(nv);
@@ -139,3 +141,9 @@ function resetform() {
     getELE("formQLNV").reset();
     getELE("tknv").disabled = false;
 }
+// function checkthem() {
+    
+//     getEle('tknv').disabled = false;
+//     getEle('btnCapNhat').style.display = 'none';
+//     getEle('btnThemNV').style.display = 'inline-block';
+// }
