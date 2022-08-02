@@ -77,7 +77,7 @@ function hienthiDS(mangNV) {
                 <td>${nv.tongluong}</td>
                 <td>${nv.xeploai}</td>
                 <td>
-                    <button class="btn btn-info " onclick="xemChitiet('${nv.maNV}')">Xem</button>
+                    <button data-toggle="modal" data-target="#myModal" class="btn btn-info " onclick="xemChitiet('${nv.maNV}')">Xem</button>
                     <button class="btn btn-danger" onclick="xoaNhanVien('${nv.maNV}')">Xõa</button>
                 </td>
             </tr>
@@ -141,9 +141,4 @@ function resetform() {
     getELE("formQLNV").reset();
     getELE("tknv").disabled = false;
 }
-// function checkthem() {
-    
-//     getEle('tknv').disabled = false;
-//     getEle('btnCapNhat').style.display = 'none';
-//     getEle('btnThemNV').style.display = 'inline-block';
-// }
+
