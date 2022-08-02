@@ -5,9 +5,24 @@
  */
 var dsnv = new DanhSachNhanVien();
 var validation = new Validation();
+
 function getELE(id) {
     return document.getElementById(id);
 }
+
+function setlocalstorage() {
+
+    localStorage.setItem("NhanVien", JSON.stringify(dsnv.mangNV));
+}
+function getlocalstorage() {
+
+    if (localStorage.getItem("NhanVien") != undefined) {
+        dsnv.mangNV = JSON.parse(localStorage.getItem("NhanVien"));
+    }
+    hienthiDS(dsnv.mangNV);
+}
+getlocalstorage();
+
 function themNhanVien() {
     var maNV = getELE("tknv").value;
     var tenNV = getELE("name").value;
@@ -22,6 +37,7 @@ function themNhanVien() {
     console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
 
     var isValid = true;
+    
     // kiểm tra maNV (KIểm tra rổng, kiểm tra không được trùng)
     isValid &= validation.checkEmpty(maNV, "tbTKNV", "Chố này không được để trống") && validation.checkID(maNV, "tbTKNV", "mã không được trùng", dsnv.mangNV);
     // kiểm tra tenNV (KIểm tra rổng, kiểm tra ký tự chữ)
@@ -33,8 +49,11 @@ function themNhanVien() {
     // kiểm tra LuongNV (KIểm tra rổng, kiểm tra formmat -số, 0<=10)
     isValid &= validation.checkEmpty(LuongNV, "tbLuongCB", "Chố này không được để trống") && validation.checkscore(LuongNV, "tbLuongCB", "không dấu âm, nhập 1000000 - 20000000");
     // kiểm tra chucvuNV (người dùng có chọn lựa chọn cái đầu tiên )
-    isValid &= validation.checkdropdown("chucvu", "tbChucVu", "Chức vụ phải chọn chức vụ hợp lệ (Giám đốc, Trưởng Phòng, Nhân Viên)");
-
+    isValid &= validation.checkdropdown("chucvu", "tbChucVu", "Chức vụ phải chọn chức vụ hợp lệ");
+    // kiểm tra ngaylamNV 
+    isValid &= validation.checkEmpty(ngaylamNV, "tbNgay", "Chố này không được để trống") && validation.checkday(ngaylamNV, "tbNgay","ngày chưa đúng đinh dạng dd/mm/yyyy");
+    // kiểm tra gioNV 
+    isValid &= validation.checkEmpty(gioNV, "tbGiolam", "Chố này không được để trống") && validation.checktime(gioNV, "tbGiolam", "giờ làm chưa đúng định dạng");
 
     if (isValid) {
         var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
@@ -50,18 +69,7 @@ function themNhanVien() {
     }
 
 }
-function setlocalstorage() {
 
-    localStorage.setItem("NhanVien", JSON.stringify(dsnv.mangNV));
-}
-function getlocalstorage() {
-
-    if (localStorage.getItem("NhanVien") != undefined) {
-        dsnv.mangNV = JSON.parse(localStorage.getItem("NhanVien"));
-    }
-    hienthiDS(dsnv.mangNV);
-}
-getlocalstorage();
 function hienthiDS(mangNV) {
     
     var content = "";
@@ -99,10 +107,11 @@ function xemChitiet(ma) {
     if (viTri > -1) {
       
         var nvTim = dsnv.mangNV[viTri];
-        console.log(nvTim);
+        
 
         getELE("tknv").value = nvTim.maNV;
         getELE("tknv").disabled = true;
+        
         getELE("name").value = nvTim.tenNV;
         getELE("email").value = nvTim.emailNV;
         getELE("password").value = nvTim.passwordNV;
@@ -129,8 +138,8 @@ function capnhatNhanVien() {
     var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
     nv.tongluong();
     nv.xeploai();
-    console.log(nv);
-
+   
+    console.log(nv)
     dsnv.capnhatNV(nv);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
@@ -142,11 +151,12 @@ function resetform() {
     getELE("tknv").disabled = false;
 }
 
-function timkiemten() {
+function timkiemxeploai() {
     var tukhoa = getELE("searchName").value;
     var mangTK = dsnv.timkiem(tukhoa.trim());
 
     hienthiDS(mangTK);
 }
 
-getELE("btnTimNV").onclick = timkiemten;
+getELE("btnTimNV").onclick = timkiemxeploai;
+getELE("searchName").onkeyup =timkiemxeploai;

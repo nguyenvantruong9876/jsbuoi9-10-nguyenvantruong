@@ -20,5 +20,5 @@ $( document ).ready(function() {
     var output = ((''+month).length<2 ? '0' : '') + month  + '/' +
     ((''+day).length<2 ? '0' : '') + day + '/' +
     d.getFullYear();
-   
+    // $('#datepicker').val(output);   
 });
