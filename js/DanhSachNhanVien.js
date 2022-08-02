@@ -32,8 +32,21 @@ function DanhSachNhanVien() {
     this.capnhatNV = function (nv) {
         var ViTri = this.timViTri(nv.maNV);
         if(ViTri > -1){
-            dsnv.mangNV[ViTri] = nv
+            dsnv.mangNV[ViTri] = nv;
         }
     }
     
+}
+DanhSachNhanVien.prototype.timkiem = function (tukhoa) {
+    var mangTK = [];
+    var tukhoathuong = tukhoa.toLowerCase();
+    this.mangNV.map(function (nv) {
+        var tenSVThuong = sv.tenNV.toLowerCase();
+        var vitriTk = tenSVThuong.indexOf(tukhoathuong);
+        if (vitriTk >-1){
+            // tìm thấy
+            mangTK.push(nv);
+        }
+    })
+    return mangTK;
 }

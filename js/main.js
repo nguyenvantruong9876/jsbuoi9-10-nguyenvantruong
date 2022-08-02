@@ -142,3 +142,11 @@ function resetform() {
     getELE("tknv").disabled = false;
 }
 
+function timkiemten() {
+    var tukhoa = getELE("searchName").value;
+    var mangTK = dsnv.timkiem(tukhoa.trim());
+
+    hienthiDS(mangTK);
+}
+
+getELE("btnTimNV").onclick = timkiemten;
