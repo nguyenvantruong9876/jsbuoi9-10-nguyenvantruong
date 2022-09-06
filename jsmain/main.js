@@ -33,9 +33,6 @@ function themNhanVien() {
     var chucvuNV = getELE("chucvu").value;
     var gioNV = getELE("gioLam").value;
 
-
-    console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
-
     var isValid = true;
     
     // kiểm tra maNV (KIểm tra rổng, kiểm tra không được trùng)
@@ -59,10 +56,7 @@ function themNhanVien() {
         var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
         nv.tongluong();
         nv.xeploai();
-        console.log(nv);
-
         dsnv.themNV(nv);
-        console.log(dsnv.mangNV);
         hienthiDS(dsnv.mangNV);
         setlocalstorage();
         resetform();
@@ -138,8 +132,6 @@ function capnhatNhanVien() {
     var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
     nv.tongluong();
     nv.xeploai();
-   
-    console.log(nv)
     dsnv.capnhatNV(nv);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
